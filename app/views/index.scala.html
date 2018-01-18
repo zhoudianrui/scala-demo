@@ -1,0 +1,10 @@
+@import com.ximalaya.demo.controller.FormData
+@(form: Form[FormData])(implicit request: MessagesRequestHeader)
+
+@main("Welcome to Play") {
+
+    @helper.form(action = com.ximalaya.demo.controller.routes.UploadController.upload, 'enctype -> "multipart/form-data") {
+       @helper.inputFile(form("name"))
+        <input type="submit" id="upload" value="upload file"/>
+    }
+}

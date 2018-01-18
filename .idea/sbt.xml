@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ScalaSbtSettings">
+    <option name="customLauncherEnabled" value="true" />
+    <option name="customLauncherPath" value="$USER_HOME$/Software/sbt/sbt-0.13.15/bin/sbt-launch.jar" />
+    <option name="linkedExternalProjectsSettings">
+      <SbtProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="jdk" value="jdk1.8" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/project" />
+          </set>
+        </option>
+        <option name="sbtVersion" value="0.13.13" />
+      </SbtProjectSettings>
+    </option>
+    <option name="vmParameters" value="-Xmx1024M -XX:ReservedCodeCacheSize=256m -Dsbt.log.format=true -Dsbt.global.base=/Users/dick/.sbt -Dsbt.boot.directory=/Users/dick/.sbt/boot/ -Dsbt.ivy.home=/Users/dick/.ivy2 -Dsbt.repository.config=/Users/dick/Software/sbt/sbt-0.13.15/conf/repositories" />
+  </component>
+</project>

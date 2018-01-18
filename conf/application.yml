@@ -1,0 +1,13 @@
+redis:
+  userListen:
+    host: 192.168.1.175
+    port: 6379
+    password: 'jredis123456'
+    db: 3
+    timeout: 60000
+  hbase:
+    host: 192.168.1.175
+    port: 6379
+    password: 'jredis123456'
+    db: 8
+    timeout: 60000
