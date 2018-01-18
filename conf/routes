@@ -1,4 +1,5 @@
-GET /api/isLive com.ximalaya.demo.controller.ListeningController.isLive()
+GET /api/isLive com.ximalaya.demo.controller.ApplicationController.isLive()
+
 GET /api/listen/cleanUserData com.ximalaya.demo.controller.ListeningController.cleanUserData()
 GET /api/listen/setListenTime com.ximalaya.demo.controller.ListeningController.setListenTime()
 

@@ -5,10 +5,9 @@ import javax.inject.Inject
 import play.api.libs.json.Json
 import play.api.mvc.{AbstractController, ControllerComponents}
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
 
 /**
-  * Description: 
+  * Description: 收听领积分相关服务(喜马拉雅hybird_scala项目)
   * Author: dick
   * Time: 2018/1/15 下午1:11
   */
@@ -16,10 +15,6 @@ class ListeningController @Inject()(components: ControllerComponents) extends Ab
 
   @Inject
   var listeningService: ListeningService = null
-
-  def isLive() = Action.async{ request =>
-    Future(Ok("OK"))
-  }
 
   def cleanUserData = Action.async{ request =>
     val resultFuture = listeningService.clearUserData(request)
