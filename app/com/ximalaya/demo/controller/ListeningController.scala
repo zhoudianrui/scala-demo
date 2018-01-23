@@ -26,6 +26,10 @@ class ListeningController @Inject()(components: ControllerComponents) extends Ab
     }
   }
 
+  /**
+    * 设置用户的收听时长
+    * @return
+    */
   def setListenTime() = Action.async{ request =>
     val resultFuture = listeningService.setListenTime(request)
     resultFuture.map{ value =>
@@ -35,5 +39,21 @@ class ListeningController @Inject()(components: ControllerComponents) extends Ab
       case e: Exception =>
         Ok("服务调用异常," + e.getMessage)
     }
+  }
+
+  /**
+    * 获取用户的收听时长
+    * @return
+    */
+  def getListenTime() = Action.async {request =>
+    val resultFuture = listeningService.getListenTime(request)
+    resultFuture.map{ value =>
+      val temp = Json.toJson(value)
+      Ok(temp)
+    }.recover{
+      case e: Exception =>
+        Ok("服务调用异常," + e.getMessage)
+    }
+
   }
 }

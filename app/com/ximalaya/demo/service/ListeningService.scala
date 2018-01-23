@@ -60,6 +60,26 @@ class ListeningService {
     }
   }
 
+  def getListenTime(rq: RequestHeader): Future[Int] = {
+    val userIdOption = rq.getQueryString("userId")
+    if (!userIdOption.isEmpty) {
+      val userIdBytes = toBytes(userIdOption.get.toLong)
+      val dateBytes = toBytes(new SimpleDateFormat("yyyyMMdd").format(new Date()).toInt)
+      val result = new Array[Byte](12)
+      System.arraycopy(userIdBytes, 0, result, 0, userIdBytes.length)
+      System.arraycopy(dateBytes, 0, result, userIdBytes.length, dateBytes.length)
+      Future {
+        core.redis.hbaseRedis.opsForValue().get(result)
+      }.map(intArrayByte2Int(_))
+        .recover {
+        case e: Exception =>
+          -1
+      }
+    } else {
+      Future(-1)
+    }
+  }
+
     /**
       * 长整型转换成字节数组
       * @param number

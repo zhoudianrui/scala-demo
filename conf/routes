@@ -2,6 +2,7 @@ GET /api/isLive com.ximalaya.demo.controller.ApplicationController.isLive()
 
 GET /api/listen/cleanUserData com.ximalaya.demo.controller.ListeningController.cleanUserData()
 GET /api/listen/setListenTime com.ximalaya.demo.controller.ListeningController.setListenTime()
+GET /api/listen/getListenTime com.ximalaya.demo.controller.ListeningController.getListenTime()
 
 #upload file
 GET / com.ximalaya.demo.controller.UploadController.index()
