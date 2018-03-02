@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans.xsd
+          http://www.springframework.org/schema/util
+          http://www.springframework.org/schema/util/spring-util.xsd"
+       default-lazy-init="false">
+
+  <util:properties id="xunchConfig" location="classpath:xunch.properties"/>
+
+  <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+
+    <property name="minIdle" value="#{xunchConfig['point.redis.minIdle']}"/>
+    <property name="maxIdle" value="#{xunchConfig['point.redis.maxIdle']}"/>
+    <property name="maxTotal" value="#{xunchConfig['point.redis.maxActive']}"/>
+    <property name="maxWaitMillis" value="#{xunchConfig['point.redis.maxWaitMillis']}"/>
+    <property name="testOnBorrow" value="#{xunchConfig['point.redis.testOnBorrow']}"/>
+    <property name="testOnReturn" value="#{xunchConfig['point.redis.testOnReturn']}"/>
+    <property name="testWhileIdle" value="#{xunchConfig['point.redis.testWhileIdle']}"/>
+    <property name="timeBetweenEvictionRunsMillis"
+              value="#{xunchConfig['point.redis.timeBetweenEvictionRunsMillis']}"/>
+    <property name="numTestsPerEvictionRun"
+              value="#{xunchConfig['point.redis.numTestsPerEvictionRun']}"/>
+    <property name="minEvictableIdleTimeMillis"
+              value="#{xunchConfig['point.redis.minEvictableIdleTimeMillis']}"/>
+    <property name="softMinEvictableIdleTimeMillis"
+              value="#{xunchConfig['point.redis.softMinEvictableIdleTimeMillis']}"/>
+  </bean>
+
+  <!-- 用户每日签到数据redis shard1 -->
+  <bean id="checkInShard1" class="com.ximalaya.xunch.shard.ShardInfo">
+    <property name="name" value="#{xunchConfig['redis.checkIn.shard1.name']}"/> <!-- shard的名称，用作一致性哈希取值 -->
+    <property name="host" value="#{xunchConfig['redis.checkIn.shard1.host']}"/>
+    <property name="port" value="#{xunchConfig['redis.checkIn.shard1.port']}"/>
+    <property name="password" value="#{xunchConfig['redis.checkIn.shard1.password']}"/>
+    <property name="database" value="#{xunchConfig['redis.checkIn.shard1.database']}"/>
+    <property name="weight" value="40"/> <!-- 一致性哈希环上的权重，越大权重越高，虚拟节点越多 -->
+    <property name="timeout" value="#{xunchConfig['redis.checkIn.shard1.timeout']}"/>
+    <property name="poolConfig" ref="jedisPoolConfig"/>
+  </bean>
+
+  <!-- 用户每日签到数据redis shard2 -->
+  <bean id="checkInShard2" class="com.ximalaya.xunch.shard.ShardInfo">
+    <property name="name" value="#{xunchConfig['redis.checkIn.shard2.name']}"/> <!-- shard的名称，用作一致性哈希取值 -->
+    <property name="host" value="#{xunchConfig['redis.checkIn.shard2.host']}"/>
+    <property name="port" value="#{xunchConfig['redis.checkIn.shard2.port']}"/>
+    <property name="password" value="#{xunchConfig['redis.checkIn.shard2.password']}"/>
+    <property name="database" value="#{xunchConfig['redis.checkIn.shard2.database']}"/>
+    <property name="weight" value="40"/> <!-- 一致性哈希环上的权重，越大权重越高，虚拟节点越多 -->
+    <property name="timeout" value="#{xunchConfig['redis.checkIn.shard2.timeout']}"/>
+    <property name="poolConfig" ref="jedisPoolConfig"/>
+  </bean>
+
+  <bean id="checkInXunchTemplate" class="com.ximalaya.xunch.shard.ShardRedisTemplate">
+    <property name="tagPattern" value="\d+"></property> <!-- 获取一致性哈希key的正则表达式 -->
+    <property name="shards">
+      <list value-type="com.ximalaya.xunch.shard.ShardInfo">
+        <ref bean="checkInShard1"/>  <!-- 关联到上面配置的2个shard信息 -->
+        <ref bean="checkInShard2"/>
+      </list>
+    </property>
+  </bean>
+
+</beans>

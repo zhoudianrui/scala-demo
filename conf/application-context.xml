@@ -14,4 +14,8 @@
   <!-- redis -->
   <import resource="classpath:redis/redis.xml"/>
 
+  <!-- xunch(redis集群) -->
+  <import resource="classpath:application-context-xunch.xml"/>
+
+
 </beans>

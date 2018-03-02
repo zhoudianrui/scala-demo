@@ -25,7 +25,7 @@ class ListeningService {
     if(!userIdOption.isEmpty) {
       val key = "point:user_daily_check_in_account:" + userIdOption.getOrElse("")
       Future{
-        core.redis.userListenRedis.delete(key)
+        core.redis.userListenRedisTemplate.delete(key)
       }.map{ _ =>
         true
       }.recover{

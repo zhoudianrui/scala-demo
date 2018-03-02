@@ -6,7 +6,7 @@
   http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
   <!-- user listen redis -->
-  <bean id="userListenJedisConnFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+  <!--<bean id="userListenJedisConnFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
     <property name="hostName" value="${redis.userListen.host}" />
     <property name="port" value="${redis.userListen.port}" />
     <property name="password" value="${redis.userListen.password}" />
@@ -20,7 +20,7 @@
     <property name="defaultSerializer">
       <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
     </property>
-  </bean>
+  </bean>-->
 
   <!-- data-hbase redis -->
   <bean id="hbaseJedisConnFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">

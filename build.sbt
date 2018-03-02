@@ -29,6 +29,7 @@ libraryDependencies ++= Seq(
   "org.springframework.guice" % "spring-guice" % "1.0.0",
   "org.yaml" % "snakeyaml" % "1.16",
   "org.springframework.data" % "spring-data-redis" % "1.5.2.RELEASE",
-  "redis.clients" % "jedis" % "2.7.3"
-)
+  //"redis.clients" % "jedis" % "2.7.3",
+  "com.ximalaya" % "xunch" % "0.1.6"
+)//.map(_ exclude("org.springframework.data", "spring-data-redis"))
 //EclipseKeys.preTasks := Seq(compile in Compile)
